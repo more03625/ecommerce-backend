@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const User = require("../models/User")
 const cryptoJs = require('crypto-js')
+const jwt = require("jsonwebtoken")
 
 router.post("/register", async (req, res) => {
     const newUser = new User({
@@ -38,12 +39,18 @@ router.post("/login", async (req, res) => {
                 })
             } else {
 
-                const { password, ...others } = user._doc // We have deleted `password` KEY from `user` object & saved other data to new `others` object and passed it
+                const accessToken = jwt.sign({
+                    id: user._id,
+                    is_admin: user.is_admin
+                }, process.env.JWT_SECRET, { expiresIn: "3d" });
+
+                const { password, ...others } = user._doc; // We have deleted `password` KEY from `user` object & saved other data to new `others` object and passed it
 
                 res.status(200).json({
+                    title: "User Logged in successfully!",
                     error: false,
-                    data: others,
-                    title: "User Logged in successfully!"
+                    token: accessToken,
+                    data: others
                 })
             }
         }
