@@ -123,11 +123,20 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
                 }
             }
         ]);
-        res.status(200).json({
-            error: false,
-            title: "Stats fetched successfully!",
-            data: data
-        })
+        if(!data){
+            res.status(200).json({
+                error: true,
+                title: "There are no products!",
+                data: []
+            })  
+        }else{
+            res.status(200).json({
+                error: false,
+                title: "Stats fetched successfully!",
+                data: data
+            })
+        }
+        
     } catch (err) {
         res.status(500).json({
             error: true,

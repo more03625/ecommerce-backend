@@ -127,13 +127,13 @@ router.get("/", async (req, res) => {
         }
 
         if (!products) {
-            res.status(500).json({
+            res.status(200).json({
                 title: "No products found",
                 error: true,
                 data: []
             })
         } else {
-            res.status(500).json({
+            res.status(200).json({
                 title: "Products has been fetched successfully",
                 error: false,
                 data: products
