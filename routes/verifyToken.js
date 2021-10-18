@@ -42,7 +42,7 @@ const verifyTokenAndAdmin = (req, res, next) => {
             res.sendStatus(403).json({
                 error: true,
                 title: "You are now allowed to perform this action."
-            })
+            });
         }
     })
 }

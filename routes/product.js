@@ -21,12 +21,10 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
                 data: savedProduct
             })
         }
-
     } catch (err) {
         res.status(500).json({
             error: true,
             title: err,
-
         })
     }
 });

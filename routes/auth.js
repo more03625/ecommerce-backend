@@ -20,10 +20,10 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.username });
+        const user = await User.findOne({ email: req.body.email });
         if (!user) {
-            res.status(401).json({
-                error: false,
+            res.status(200).json({
+                error: true,
                 data: [],
                 title: "Invalid email or password!"
             })
@@ -32,8 +32,8 @@ router.post("/login", async (req, res) => {
             const dbPassword = hashedPassword.toString(cryptoJs.enc.Utf8); // Bcrypt is more secure!
 
             if (dbPassword != req.body.password) {
-                res.status(401).json({
-                    error: false,
+                res.status(200).json({
+                    error: true,
                     data: [],
                     title: "Invalid email or password!"
                 })
