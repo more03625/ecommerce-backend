@@ -81,6 +81,32 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
     }
 });
 
+//GET Product by search query
+router.get("/search/", async (req, res) => {
+    try {
+        // const products = await Product.find({title: req.query.search});
+        const products = await Product.find({title: {"$regex": ".*" + req.query.search + ".*"}});
+        if (!products) {
+            res.status(200).json({
+                title: "No product found",
+                error: true,
+                data: []
+            })
+        } else {
+            res.status(200).json({
+                title: "Product has been fetched successfully!",
+                error: false,
+                data: products
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            error: true,
+            title: err
+        })
+    }
+});
+
 //GET Product by ID
 router.get("/find/:id", async (req, res) => {
     try {
