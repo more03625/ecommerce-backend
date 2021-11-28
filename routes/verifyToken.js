@@ -2,13 +2,14 @@ const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers.token
+    
     if (!authHeader) {
         res.status(401).json({
             title: "You are not authorized",
             error: true
         })
     } else {
-        var token = authHeader.split(" ")[1];
+        let token = authHeader.split(" ")[1];
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
                 res.status(401).json({

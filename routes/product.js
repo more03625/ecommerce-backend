@@ -85,7 +85,10 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 router.get("/search/", async (req, res) => {
     try {
         // const products = await Product.find({title: {"$regex": ".*" + req.query.search + ".*"}});
-        const products = await Product.find( { $text: { $search:  req.query.search } } );
+        const products = await Product.find({ $text: { $search: req.query.search } });
+        // Price 
+        // Brand
+        // Colour
         
         if (!products) {
             res.status(200).json({

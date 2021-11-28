@@ -18,9 +18,12 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
                 title: "Unable to update this user"
             })
         } else {
+            
+            const { password, ...others } = updatedUser._doc; // We have deleted `password` KEY from `user` object & saved other data to new `others` object and passed it
+
             res.status(200).json({
                 error: false,
-                data: updatedUser,
+                data: others,
                 title: "User has been updated successfully!"
             })
         }
@@ -56,6 +59,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
+        console.log("====> ", user)
         if (!user) {
             res.status(200).json({
                 title: "No user found",
